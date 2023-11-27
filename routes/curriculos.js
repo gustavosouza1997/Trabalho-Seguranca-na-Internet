@@ -12,14 +12,20 @@ router.get('/cadastrar', (req, res) => {
   res.render('cadastrar');
 });
 
+// Formulário para cadastrar um novo currículo
+router.get('/listar', (req, res) => {
+  res.render('listar');
+});
+
 // Cadastrar um novo currículo
 router.post('/cadastrar', async (req, res) => {
-  // Lógica para inserir dados no banco de dados
+  const curriculos = await curriculosController.insertCurriculos(req, res);
+  res.render('listar');
 });
 
 // Consultar informações de um currículo
 router.get('/consultar/:id', async (req, res) => {
-  // Lógica para consultar dados no banco de dados
+  res.render('consultar');
 });
 
 module.exports = router;
