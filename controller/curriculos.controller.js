@@ -17,7 +17,7 @@ class CurriculosController {
         [person_name, phone, email, webpage, experience]
       );
       await connection.$pool.end();
-      return res.send({ curriculos });
+      res.render('listar');
     } catch (error) {
       console.error('Erro ao processar currículo:', error);
       res.status(500).send('Erro ao processar currículo.');

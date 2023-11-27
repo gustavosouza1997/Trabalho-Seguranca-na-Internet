@@ -20,7 +20,6 @@ router.get('/listar', (req, res) => {
 // Cadastrar um novo currículo
 router.post('/cadastrar', async (req, res) => {
   const curriculos = await curriculosController.insertCurriculos(req, res);
-  res.render('listar');
 });
 
 // Consultar informações de um currículo
