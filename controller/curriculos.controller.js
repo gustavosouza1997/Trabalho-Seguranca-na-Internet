@@ -5,7 +5,7 @@ class CurriculosController {
     const connection = pgp()('postgres://postgres:postgres@localhost:5432/trabalhog2');
     const curriculos = await connection.query('SELECT * FROM curriculos');
     await connection.$pool.end();
-    res.render('listar', { curriculos });
+    res.render('/', { curriculos });
   }
 
   async insertCurriculos(req, res) {
@@ -17,7 +17,8 @@ class CurriculosController {
         [person_name, phone, email, webpage, experience]
       );
       await connection.$pool.end();
-      res.render('listar');
+      res.render('listar', { curriculos });
+      return;
     } catch (error) {
       console.error('Erro ao processar currículo:', error);
       res.status(500).send('Erro ao processar currículo.');
