@@ -16,7 +16,6 @@
     <table border="1">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Nome</th>
           <th>Email</th>
         </tr>
@@ -24,7 +23,6 @@
       <tbody>
         <% curriculos.forEach(curriculo => { %>
           <tr>
-            <td><%= curriculo.id_person %></td>
             <td><a href="/consultar/<%= curriculo.id_person %>"><%= curriculo.person_name %></a> </td>
             <td><%= curriculo.email %></td>
           </tr>

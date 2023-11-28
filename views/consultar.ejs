@@ -3,14 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consultar Currículo</title>
+  <title>Visualizar Currículo</title>
 </head>
 <body>
   <nav>
     <button onclick="location.href='/'">Listagem</button>
   </nav>
 
-  <h1>Consultar Currículo</h1>
-  <!-- Exibir informações do currículo selecionado -->
+  <h1>Visualizar Currículo</h1>
+  <form id="consultarCurriculo">
+    <br><label for="person_name">Nome:</label></br>
+    <input type="text" id="person_name" name="person_name" value="<%= curriculo[0].person_name %>" readonly>
+    <br><label for="phone">Telefone:</label></br>
+    <input type="text" id="phone" name="phone" value="<%= curriculo[0].phone %>" readonly>
+    <br><label for="email">E-mail:</label></br>
+    <input type="email" id="email" name="email" value="<%= curriculo[0].email %>" readonly>
+    <br><label for="webpage">Endereço Web:</label></br>
+    <input type="text" id="webpage" name="webpage" value="<%= curriculo[0].webpage %>" readonly>
+    <br><label for="experience">Experiência Profissional:</label></br>
+    <textarea id="experience" name="experience" readonly><%= curriculo[0].experience %></textarea>
+  </form>
 </body>
 </html>
