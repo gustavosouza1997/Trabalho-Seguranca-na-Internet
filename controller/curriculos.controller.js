@@ -1,5 +1,6 @@
 const pgp = require('pg-promise');
 const dotenv = require('dotenv').config();
+const { Utils } = require('../utils/utils');
 
 class CurriculosController {
   async getAllCurriculos(req, res) {
@@ -24,7 +25,6 @@ class CurriculosController {
         [req.params.id_person]
       );
       await connection.$pool.end();
-      console.log(curriculo);
       res.render('consultar', { curriculo });
     } catch (error) {
       console.error('Erro ao pesquisar currículo:', error);
@@ -34,6 +34,11 @@ class CurriculosController {
 
   async insertCurriculos(req, res) {
     const connection = pgp()(process.env.POSTGRES_CONNECTION_STRING);
+    const utilsInstance = new Utils();
+
+    if (!(await utilsInstance.validaCurriculo(req, res))) {
+      return;
+    }
 
     try {
       const { person_name, phone, email, webpage, experience } = req.body;
@@ -52,5 +57,5 @@ class CurriculosController {
 }
 
 module.exports = {
-  CurriculosController,
+  CurriculosController
 };

@@ -9,7 +9,6 @@ const { setup_db } = require('./controller/db-setup');
 const app = express();
 const port = process.env.APP_PORT
 
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
