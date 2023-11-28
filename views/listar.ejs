@@ -13,9 +13,24 @@
 
   <h1>Listagem de Currículos</h1>
   <ul>
-    <% curriculos.forEach(curriculo => { %>
-      <li><%= curriculo.person_name %> - <%= curriculo.email %></li>
-    <% }); %>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% curriculos.forEach(curriculo => { %>
+          <tr>
+            <td><%= curriculo.id_person %></td>
+            <td><a href="/consultar/<%= curriculo.id_person %>"><%= curriculo.person_name %></a> </td>
+            <td><%= curriculo.email %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
   </ul>
 </body>
 </html>

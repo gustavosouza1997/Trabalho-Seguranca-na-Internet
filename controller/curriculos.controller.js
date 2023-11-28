@@ -24,7 +24,7 @@ class CurriculosController {
         [person_name, phone, email, webpage, experience]
       );
       await connection.$pool.end();
-      this.getCurriculos(req, res);
+      res.redirect('/');
       return;
     } catch (error) {
       console.error('Erro ao processar currículo:', error);
