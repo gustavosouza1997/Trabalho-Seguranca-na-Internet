@@ -14,6 +14,7 @@ router.get('/cadastrar', (req, res) => {
 
 // Cadastrar um novo currículo
 router.post('/cadastrar', async (req, res) => {
+  console.log('req.body', req.body);
   const curriculos = await curriculosController.insertCurriculos(req, res);
 });
 
