@@ -1,30 +1,49 @@
-const https = require('https');
-const fs = require('fs');
-const express = require('express');
-const bodyParser = require('body-parser');
-const curriculosRoutes = require('./routes/curriculos');
-const dotenv = require('dotenv').config();
-const { setup_db } = require('./controller/db-setup');
+  const https = require('https');
+  const fs = require('fs');
+  const express = require('express');
+  const bodyParser = require('body-parser');
+  const curriculosRoutes = require('./routes/curriculos');
+  const dotenv = require('dotenv').config();
+  const { setup_db } = require('./controller/db-setup');
+  const cookieParser = require('cookie-parser');
+  const csrf = require('csurf');
 
-const app = express();
-const port = process.env.APP_PORT
+  const app = express();
+  const port = process.env.APP_PORT
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.use('/', curriculosRoutes);
+  app.set('view engine', 'ejs');
+  app.set('view cache', false);
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(express.static('public'));
+  app.use(cookieParser(process.env.COOKIES_SECRET));
+  app.use(
+    csrf({
+      cookie: {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None',
+      },
+    })
+  );
 
-const privateKey = fs.readFileSync('./certificado.key', 'utf8');
-const certificate = fs.readFileSync('./certificado.cert', 'utf8');
+  app.use((req, res, next) => {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+  });
 
-const credentials = {
-  key: privateKey,
-  cert: certificate,
-};
+  app.use('/', curriculosRoutes);
 
-const httpsServer = https.createServer(credentials, app);
+  const privateKey = fs.readFileSync('./certificado.key', 'utf8');
+  const certificate = fs.readFileSync('./certificado.cert', 'utf8');
 
-httpsServer.listen(port, async () => {
-  console.log(`HTTPS Server running on https://localhost:${port}`);
-  await setup_db();
-});
+  const credentials = {
+    key: privateKey,
+    cert: certificate,
+  };
+
+  const httpsServer = https.createServer(credentials, app);
+
+  httpsServer.listen(port, async () => {
+    console.log(`HTTPS Server running on https://localhost:${port}`);
+    await setup_db();
+  });
